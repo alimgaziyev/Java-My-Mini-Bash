@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("MyFS 1.0 команды:");
+        System.out.println("MyBash 1.1 команды:");
         CmdLine.cmdExecute("help");
         Scanner scanner = new Scanner(System.in);
         while (true) {
