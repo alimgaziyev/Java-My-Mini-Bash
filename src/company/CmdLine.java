@@ -6,7 +6,67 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class MyFile {
+public class CmdLine {
+    public static boolean cmdExecute(String cmdLine) {
+        String[] cmdLineArray = cmdLine.split("\\s");
+        String cmd = cmdLineArray[0];
+        String path = "";
+        boolean isExit = false;
+        if (cmdLineArray.length >= 2) {
+            path = cmdLineArray[1];
+        }
+        switch (cmd) {
+            case "ls":
+                MyFile.listDirectory(path);
+                break;
+            case "ls_py":
+                MyFile.listPythonFiles(path);
+                break;
+            case "is_dir":
+                MyFile.isDirectory(path);
+                break;
+            case "define":
+                MyFile.define(path);
+                break;
+            case "readmod":
+                MyFile.printPermissions(path);
+                break;
+            case "setmod":
+                if (cmdLineArray.length == 3) {
+                    MyFile.setPermissions(path, cmdLineArray[2]);
+                } else {
+                    System.out.println("Ошибка! не правильно использованна команда, чтобы " +
+                            "ознакомиться с командами введите help");
+                }
+                break;
+            case "cat":
+                MyFile.printContent(path);
+                break;
+            case "append":
+                MyFile.appendFooter(path);
+                break;
+            case "bc":
+                MyFile.createBackup(path);
+                break;
+            case "greplong":
+                MyFile.printLongestWord(path);
+                break;
+            case "help":
+                MyFile.help();
+                break;
+            case "exit":
+                MyFile.exit();
+                isExit = true;
+                break;
+            default:
+                System.out.println("Ошибка! Команда не существует чтобы ознакомиться с командами введите help");
+
+        }
+        return isExit;
+    }
+}
+
+class MyFile {
     public static void listDirectory(String path) {
         File file = new File(path);
         if (checkExistingPath(file)) {
@@ -221,9 +281,8 @@ public class MyFile {
     }
 
     // завершает работу программы - exit
-    public static boolean exit() {
+    public static void exit() {
         System.out.println("Goodbye");
-        return true;
     }
     private static boolean checkExistingPath(File file) {
         if (!file.exists()) {
